@@ -28,8 +28,11 @@ def main():
         if not openai_api_key:
             st.info("Please add your OpenAI API key to continue.")
             st.stop()
+        st.write('load data start')
         with st.spinner(text='데이터 수집중...'):
             data = load_data()
+        st.write('end data start')
+        st.write('tokenize start')
         with st.spinner(text='텍스트 토큰화중...'):
             retriever = SparseRetriever(data)
         st.write('한국사에 대해 질문해주세요.')
