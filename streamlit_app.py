@@ -63,9 +63,9 @@ def main():
 
 def load_data():
     chunks = list()
-    for chunk in os.listdir('./data/'):
+    for chunk in os.listdir('data/'):
         if chunk.endswith('.txt'):
-            with open(os.path.join('./data/', chunk)) as f:
+            with open(os.path.join('data/', chunk)) as f:
                 content = f.read()
             chunks.append(content)
 
