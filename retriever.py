@@ -1,8 +1,8 @@
-from konlpy.tag import Okt
+from konlpy.tag import Mecab
 from rank_bm25 import BM25Okapi
 
 class SparseRetriever():
-    def __init__(self, corpus, tokenizer=Okt()):
+    def __init__(self, corpus, tokenizer=Mecab()):
         self.tokenizer = tokenizer
         self.corpus = corpus
         self.tokenized_corpus = [tokenizer.morphs(text) for text in corpus]
