@@ -50,9 +50,7 @@ def main():
 
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-    history = StreamlitChatMessageHistory(key="chat_messages")
+            if message["role"] != "system": st.markdown(message["content"])
 
     # Chat logic
     if query := st.chat_input("질문을 입력해주세요."):
