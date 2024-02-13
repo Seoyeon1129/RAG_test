@@ -30,7 +30,9 @@ def main():
             st.stop()
         with st.spinner(text='데이터 수집중...'):
             data = load_data()
+        with st.spinner(text='텍스트 토큰화중...'):
             retriever = SparseRetriever(data)
+        st.write('한국사에 대해 질문해주세요.')
         st.session_state.processComplete = True
 
     if 'messages' not in st.session_state:
