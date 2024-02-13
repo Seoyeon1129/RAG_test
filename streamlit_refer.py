@@ -120,10 +120,10 @@ def load_data_pdf(chunk_size=700, chunk_overlap = 100):
     return chunks                   
 
 def load_data():
-    chunks_md = load_data_md()
+    # chunks_md = load_data_md()
     chunks_07 = load_data_2007()
     # chunks_pdf = load_data_pdf()
-    chunks_total = chunks_md + chunks_07 # + chunks_pdf
+    chunks_total = chunks_07 # + chunks_pdf
     filtered_chunks = filter_complex_metadata(chunks_total)
     filtered_texts = [doc.page_content for doc in filtered_chunks]
     return filtered_texts
