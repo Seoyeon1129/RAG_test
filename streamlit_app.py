@@ -26,15 +26,15 @@ def main():
 
     with st.sidebar:
         openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
-        process = st.button("Process")
+        process = st.button("실행")
     if process:
         if not openai_api_key:
-            st.info("Please add your OpenAI API key to continue.")
+            st.info("OpenAI API 키를 입력하세요.")
             st.stop()
-        # with st.spinner(text='데이터 수집중...'):
-        #     data = load_data()
-        # with st.spinner(text='텍스트 토큰화중...'):
-        #     st.session_state.retriever = SparseRetriever(data)
+        with st.spinner(text='데이터 수집중...'):
+            data = load_data()
+        with st.spinner(text='텍스트 토큰화중...'):
+            st.session_state.retriever = SparseRetriever(data)
         st.write('한국사에 대해 질문해주세요.')
         st.session_state.processComplete = True
         st.session_state.query = list()
@@ -52,7 +52,7 @@ def main():
     # Chat logic
     if query := st.chat_input("질문을 입력해주세요."):
 
-        contexts = '테스트' # st.session_state.retriever.retrieve(query)
+        contexts = st.session_state.retriever.retrieve(query)
         prompt = PROMPT_1.format(query=query, contexts=contexts)
         st.session_state.messages.append({"role": "user", "content": prompt})
 
