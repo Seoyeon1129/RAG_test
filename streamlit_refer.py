@@ -19,7 +19,7 @@ def main():
     page_title="History Teller",
     page_icon=":books:")
 
-    st.title("_Private Data :red[QA Chat]_ :books:")
+    st.title("_History Teller :red[한국사 질문 응답 서비스]_ :books:")
 
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
