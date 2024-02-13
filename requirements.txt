@@ -1,4 +1,3 @@
-pysqlite3-binary
 openai
 langchain
 pdfplumber
@@ -8,5 +7,4 @@ chardet
 konlpy
 langchain-openai
 rank_bm25
-loguru
 markdown
