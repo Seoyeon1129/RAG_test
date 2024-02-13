@@ -1,4 +1,5 @@
 from konlpy.tag import Okt
+from rank_bm25 import BM25Okapi
 
 class SparseRetriever():
     def __init__(self, corpus, tokenizer=Okt()):
