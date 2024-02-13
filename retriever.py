@@ -4,7 +4,7 @@ class SparseRetriever():
     def __init__(self, corpus, tokenizer=Okt()):
         self.tokenizer = tokenizer
         self.corpus = corpus
-        self.tokenized_corpus = [tokenizer.morphs(text) for text in tqdm(corpus)]
+        self.tokenized_corpus = [tokenizer.morphs(text) for text in corpus]
         self.bm25 = BM25Okapi(self.tokenized_corpus)
     def retrieve(self, query, k=5):
         tokenized_query = self.tokenizer.morphs(query)

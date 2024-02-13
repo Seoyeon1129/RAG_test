@@ -113,7 +113,7 @@ def load_data_pdf(chunk_size=700, chunk_overlap = 100):
         is_separator_regex=False,
     )
     chunks = []
-    for loader in tqdm(loaders):
+    for loader in loaders:
         chunks.extend(loader.load_and_split(text_splitter=text_splitter))
         
     return chunks                   
