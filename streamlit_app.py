@@ -34,7 +34,7 @@ def main():
         st.write('end data start')
         st.write('tokenize start')
         with st.spinner(text='텍스트 토큰화중...'):
-            retriever = SparseRetriever(data)
+            st.session_state.retriever = SparseRetriever(data)
         st.write('한국사에 대해 질문해주세요.')
         st.session_state.processComplete = True
 
@@ -50,7 +50,7 @@ def main():
 
     # Chat logic
     if query := st.chat_input("질문을 입력해주세요."):
-        contexts = retriever.retrieve(query)
+        contexts = st.session_state.retriever.retrieve(query)
         prompt = PROMPT_1.format(query=query, contexts=contexts)
         st.session_state.messages.append({"role": "user", "content": prompt})
 
