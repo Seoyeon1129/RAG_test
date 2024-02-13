@@ -9,4 +9,4 @@ konlpy
 langchain-openai
 rank_bm25
 loguru
-
+markdown

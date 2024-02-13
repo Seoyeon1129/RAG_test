@@ -86,7 +86,6 @@ def load_data_2007():
     with open("./data/kohist_2007.txt", encoding=encoding) as f:
         data_2007 = f.read()
 
-
     text_splitter = CharacterTextSplitter(
         separator="\n\n",
         chunk_size=100,
