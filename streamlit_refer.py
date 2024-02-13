@@ -2,6 +2,7 @@ import streamlit as st
 import chardet
 import os
 import openai
+import markdown
 from loguru import logger
 from konlpy.tag import Okt
 from langchain.text_splitter import CharacterTextSplitter, RecursiveCharacterTextSplitter
