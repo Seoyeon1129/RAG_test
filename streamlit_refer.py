@@ -1,15 +1,6 @@
 import streamlit as st
-import chardet
 import os
 import openai
-from loguru import logger
-from konlpy.tag import Okt
-from langchain.text_splitter import CharacterTextSplitter, RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import UnstructuredMarkdownLoader, PDFPlumberLoader
-from langchain_community.vectorstores import Chroma
-from langchain_community.vectorstores.utils import filter_complex_metadata
-from langchain_openai import OpenAIEmbeddings
-
 
 from retriever import SparseRetriever
 from prompt import PROMPT_1
@@ -70,62 +61,16 @@ def main():
 # Add assistant message to chat history
         st.session_state.messages.append({"role": "assistant", "content": response})
 
-
-def load_data_md():
-    loader = UnstructuredMarkdownLoader("./data/kohist.md", mode='elements')
-    data_md = loader.load()
-    chunks = []
-    for document in data_md:
-        if len(document.page_content)>30:
-            chunks.append(document)
-    return chunks
-
-def load_data_2007():
-    with open("./data/kohist_2007.txt", "rb") as f:
-        encoding = chardet.detect(f.read())["encoding"]
-    with open("./data/kohist_2007.txt", encoding=encoding) as f:
-        data_2007 = f.read()
-
-    text_splitter = CharacterTextSplitter(
-        separator="\n\n",
-        chunk_size=100,
-        chunk_overlap=0,
-        length_function=len,
-        is_separator_regex=False,
-    )
-    documents = text_splitter.create_documents([data_2007])
-    chunks = []
-    
-    for document in documents:
-        chunks.append(document)
-        
-    return chunks
-
-def load_data_pdf(chunk_size=700, chunk_overlap = 100):
-    loaders = []
-    for pdf in os.listdir("./data/pdf"):
-        loaders.append(PDFPlumberLoader(os.path.join("./data/pdf", pdf)))
-        
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap,
-        length_function=len,
-        is_separator_regex=False,
-    )
-    chunks = []
-    for loader in loaders:
-        chunks.extend(loader.load_and_split(text_splitter=text_splitter))
-        
-    return chunks                   
-
 def load_data():
-    chunks_md = load_data_md()
-    chunks_07 = load_data_2007()
-    # chunks_pdf = load_data_pdf()
-    chunks_total = chunks_md + chunks_07 # + chunks_pdf
-    filtered_chunks = filter_complex_metadata(chunks_total)
-    filtered_texts = [doc.page_content for doc in filtered_chunks]
-    return filtered_texts
+    chunks = list()
+    for chunk in os.listdir('./data/'):
+        if chunk.endswith('.txt'):
+            with open(os.path.join('./data/', chunk)) as f:
+                content = f.read()
+            chunks.append(content)
+
+    return chunks
+
 
 def text_generator(messages, openai_api_key, model="gpt-4", temperature=0):
     openai.api_key = openai_api_key
