@@ -24,9 +24,6 @@ def main():
     if "retriever" not in st.session_state:
         st.session_state.retriever = None
 
-    if "query" not in st.session_state:
-        st.session_state.query = None
-
     with st.sidebar:
         openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
         process = st.button("Process")
@@ -47,12 +44,14 @@ def main():
                 {"role": "system", "content": "질문에 오류 혹은 잘못된 정보가 있는지 확인하고, 있다면 이것을 지적하고 수정해."},
                ]
 
-    for message in st.session_state.query:
-        st.markdown(message)
+    for message in st.session_state.messages:
+        if message["role"] != "system": 
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
 
     # Chat logic
     if query := st.chat_input("질문을 입력해주세요."):
-        st.session_state.query.append(query)
+
         contexts = '테스트' # st.session_state.retriever.retrieve(query)
         prompt = PROMPT_1.format(query=query, contexts=contexts)
         st.session_state.messages.append({"role": "user", "content": prompt})
@@ -61,9 +60,9 @@ def main():
             st.markdown(query)
 
         with st.chat_message("assistant"):
-
-            with st.spinner("Thinking..."):
+            with st.spinner("답변 작성중..."):
                 response = text_generator(st.session_state.messages, openai_api_key)
+                st.session_state.messages[-1]["content"] = query
                 st.markdown(response)
 
 # Add assistant message to chat history
