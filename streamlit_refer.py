@@ -40,7 +40,6 @@ def main():
         with st.spinner(text='데이터 수집중...'):
             data = load_data()
             retriever = SparseRetriever(data)
-        st.session_state.conversation = get_conversation_chain(vetorestore,openai_api_key) 
         st.session_state.processComplete = True
 
     if 'messages' not in st.session_state:
@@ -49,8 +48,9 @@ def main():
                ]
 
     for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            if message["role"] != "system": st.markdown(message["content"])
+        if message["role"] != "system": 
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
 
     # Chat logic
     if query := st.chat_input("질문을 입력해주세요."):
