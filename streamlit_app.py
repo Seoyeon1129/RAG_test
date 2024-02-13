@@ -21,6 +21,9 @@ def main():
     if "processComplete" not in st.session_state:
         st.session_state.processComplete = None
 
+    if "retriever" not in st.session_state:
+        st.session_state.retriever = None
+
     with st.sidebar:
         openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
         process = st.button("Process")
