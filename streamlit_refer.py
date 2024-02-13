@@ -130,10 +130,6 @@ def load_data():
 def text_generator(messages, openai_api_key, model="gpt-4", temperature=0):
     openai.api_key = openai_api_key
     client = openai.OpenAI()
-    messages = [{"role": "system", "content": "한국사 관련 질문이 아닐 경우 답변을 거부해."},
-                {"role": "system", "content": "질문에 오류 혹은 잘못된 정보가 있는지 확인하고, 있다면 이것을 지적하고 수정해."},
-                {"role": "user", "content": prompt},
-               ]
     response = client.chat.completions.create(
         model=model,
         messages=messages,
