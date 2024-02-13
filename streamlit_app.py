@@ -31,10 +31,10 @@ def main():
         if not openai_api_key:
             st.info("Please add your OpenAI API key to continue.")
             st.stop()
-        with st.spinner(text='데이터 수집중...'):
-            data = load_data()
-        with st.spinner(text='텍스트 토큰화중...'):
-            st.session_state.retriever = SparseRetriever(data)
+        # with st.spinner(text='데이터 수집중...'):
+        #     data = load_data()
+        # with st.spinner(text='텍스트 토큰화중...'):
+        #     st.session_state.retriever = SparseRetriever(data)
         st.write('한국사에 대해 질문해주세요.')
         st.session_state.processComplete = True
 
@@ -50,7 +50,7 @@ def main():
 
     # Chat logic
     if query := st.chat_input("질문을 입력해주세요."):
-        contexts = st.session_state.retriever.retrieve(query)
+        contexts = '테스트' # st.session_state.retriever.retrieve(query)
         prompt = PROMPT_1.format(query=query, contexts=contexts)
         st.session_state.messages.append({"role": "user", "content": prompt})
 
@@ -78,8 +78,7 @@ def load_data():
 
 
 def text_generator(messages, openai_api_key, model="gpt-4", temperature=0):
-    openai.api_key = openai_api_key
-    client = openai.OpenAI()
+    client = openai.OpenAI(api_key=openai_api_key)
     response = client.chat.completions.create(
         model=model,
         messages=messages,
