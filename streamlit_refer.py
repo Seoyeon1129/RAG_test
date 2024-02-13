@@ -1,23 +1,15 @@
 import streamlit as st
-import tiktoken
 from loguru import logger
 
-from langchain.chains import ConversationalRetrievalChain
-from langchain.chat_models import ChatOpenAI
-
-from langchain.document_loaders import PyPDFLoader
-from langchain.document_loaders import Docx2txtLoader
-from langchain.document_loaders import UnstructuredPowerPointLoader
-
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-
-from langchain.memory import ConversationBufferMemory
-from langchain.vectorstores import FAISS
-
-# from streamlit_chat import message
-from langchain.callbacks import get_openai_callback
-from langchain.memory import StreamlitChatMessageHistory
+import chardet
+import os
+from konlpy.tag import Okt
+from langchain.text_splitter import CharacterTextSplitter, RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import UnstructuredMarkdownLoader, PDFPlumberLoader
+from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores.utils import filter_complex_metadata
+from langchain_openai import OpenAIEmbeddings
+from rank_bm25 import BM25Okapi
 
 def main():
     st.set_page_config(
