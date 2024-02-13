@@ -10,16 +10,7 @@ def main():
     page_title="History Teller",
     page_icon=":books:")
 
-    st.title("_History Teller :red[한국사 질문 응답 서비스]_ :books:")
-
-    if "conversation" not in st.session_state:
-        st.session_state.conversation = None
-
-    if "chat_history" not in st.session_state:
-        st.session_state.chat_history = None
-
-    if "processComplete" not in st.session_state:
-        st.session_state.processComplete = None
+    st.title("한국사 챗봇 History Teller")
 
     if "retriever" not in st.session_state:
         st.session_state.retriever = None
@@ -36,8 +27,6 @@ def main():
         with st.spinner(text='텍스트 토큰화중...'):
             st.session_state.retriever = SparseRetriever(data)
         st.write('한국사에 대해 질문해주세요.')
-        st.session_state.processComplete = True
-        st.session_state.query = list()
 
     if 'messages' not in st.session_state:
         st.session_state['messages'] =[{"role": "system", "content": "한국사 관련 질문이 아닐 경우 답변을 거부해."},
@@ -70,12 +59,15 @@ def main():
 
 def load_data():
     chunks = list()
-    for chunk in os.listdir('data/'):
+    n = len(os.listdir('data/'))
+    my_bar = st.progress(0., text=f"0 / {n}")
+    for i, chunk in enumerate(os.listdir('data/')):
         if chunk.endswith('.txt'):
             with open(os.path.join('data/', chunk)) as f:
                 content = f.read()
             chunks.append(content)
-
+        my_bar.progress((i+1)/n, text=f'{i+1} / {n}')
+    my_bar.empty()
     return chunks
 
 
