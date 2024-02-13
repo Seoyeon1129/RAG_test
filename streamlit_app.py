@@ -24,6 +24,9 @@ def main():
     if "retriever" not in st.session_state:
         st.session_state.retriever = None
 
+    if "query" not in st.session_state:
+        st.session_state.query = None
+
     with st.sidebar:
         openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
         process = st.button("Process")
@@ -37,19 +40,19 @@ def main():
         #     st.session_state.retriever = SparseRetriever(data)
         st.write('한국사에 대해 질문해주세요.')
         st.session_state.processComplete = True
+        st.session_state.query = list()
 
     if 'messages' not in st.session_state:
         st.session_state['messages'] =[{"role": "system", "content": "한국사 관련 질문이 아닐 경우 답변을 거부해."},
                 {"role": "system", "content": "질문에 오류 혹은 잘못된 정보가 있는지 확인하고, 있다면 이것을 지적하고 수정해."},
                ]
 
-    for message in st.session_state.messages:
-        if message["role"] != "system": 
-            with st.chat_message(message["role"]):
-                st.markdown(message["content"])
+    for message in st.session_state.query:
+        st.markdown(message)
 
     # Chat logic
     if query := st.chat_input("질문을 입력해주세요."):
+        st.session_state.query.append(query)
         contexts = '테스트' # st.session_state.retriever.retrieve(query)
         prompt = PROMPT_1.format(query=query, contexts=contexts)
         st.session_state.messages.append({"role": "user", "content": prompt})
