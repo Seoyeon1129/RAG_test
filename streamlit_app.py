@@ -63,15 +63,18 @@ def main():
             st.session_state.messages.append({"role": "assistant", "content": response})
 
     elif question_type == '객관식':
-        query_main = st.chat_input("질문을 입력해주세요.")
-        query_1 = st.chat_input("보기 1")
-        query_2 = st.chat_input("보기 2")
-        query_3 = st.chat_input("보기 3")
-        query_4 = st.chat_input("보기 4")
-        query_5 = st.chat_input("보기 5")
-        for query in [query_main, query_1, query_2, query_3, query_4, query_5]:
-            if query:
-                st.write(query)
+        with st.chat_message("user"):
+            query = ""
+            if query_main := st.chat_input("보기를 제외한 질문을 입력해주세요."):
+                query += query_main
+                st.markdown(query)
+                if query_1 := st.chat_input("보기 1"):
+                    query += query_1
+                    st.markdown(query)
+                    if query_2 := st.chat_input("보기 2"):
+                        query += query_2
+                        st.markdown(query)
+            
 
 # Add assistant message to chat history
         
