@@ -69,8 +69,9 @@ def main():
         query_3 = st.chat_input("보기 3")
         query_4 = st.chat_input("보기 4")
         query_5 = st.chat_input("보기 5")
-        if query_main and query_1 and query_2 and query_3 and query_4 and query_5:
-            st.write('질문이 입력되었습니다.')
+        for query in [query_main, query_1, query_2, query_3, query_4, query_5]:
+            if query:
+                st.write(query)
 
 # Add assistant message to chat history
         
