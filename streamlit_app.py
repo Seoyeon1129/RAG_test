@@ -60,13 +60,20 @@ def main():
                     response = text_generator(st.session_state.messages, openai_api_key)
                     st.session_state.messages[-1]["content"] = query
                     st.markdown(response)
+            st.session_state.messages.append({"role": "assistant", "content": response})
+
     elif question_type == '객관식':
         query_main = st.chat_input("질문을 입력해주세요.")
         query_1 = st.chat_input("보기 1")
         query_2 = st.chat_input("보기 2")
+        query_3 = st.chat_input("보기 4")
+        query_4 = st.chat_input("보기 4")
+        query_5 = st.chat_input("보기 5")
+        if query_main and query_1 and query_2 and query_3 and query_4 and query_5:
+            st.write('질문이 입력되었습니다.')
 
 # Add assistant message to chat history
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        
 
 def load_data():
     chunks = list()
