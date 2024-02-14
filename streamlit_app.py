@@ -66,7 +66,7 @@ def main():
         query_main = st.chat_input("질문을 입력해주세요.")
         query_1 = st.chat_input("보기 1")
         query_2 = st.chat_input("보기 2")
-        query_3 = st.chat_input("보기 4")
+        query_3 = st.chat_input("보기 3")
         query_4 = st.chat_input("보기 4")
         query_5 = st.chat_input("보기 5")
         if query_main and query_1 and query_2 and query_3 and query_4 and query_5:
