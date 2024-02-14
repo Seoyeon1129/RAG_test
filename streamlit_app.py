@@ -64,11 +64,11 @@ def main():
 
     elif question_type == '객관식':
         message = st.chat_message("assistant")
-        if query_main := st.chat_input("보기를 제외한 질문을 입력해주세요."):
+        if query_main := message.chat_input("보기를 제외한 질문을 입력해주세요."):
             message.markdown(query_main)
-            if query_1 := st.chat_input("보기 1"):
+            if query_1 := message.chat_input("보기 1"):
                 message.markdown(query_1)
-            if query_2 := st.chat_input("보기 2"):
+            if query_2 := message.chat_input("보기 2"):
                 message.markdown(query_2)
             
 
