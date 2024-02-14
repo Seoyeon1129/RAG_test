@@ -63,10 +63,11 @@ def main():
             st.session_state.messages.append({"role": "assistant", "content": response})
 
     elif question_type == '객관식':
-        with st.chat_message("user"):
-            query = ""
-            if query_main := st.chat_input("보기를 제외한 질문을 입력해주세요."):
-                query += query_main
+        
+        query = ""
+        if query_main := st.chat_input("보기를 제외한 질문을 입력해주세요."):
+            query += query_main
+            with st.chat_message("user"):
                 st.markdown(query)
                 if query_1 := st.chat_input("보기 1"):
                     query += query_1
