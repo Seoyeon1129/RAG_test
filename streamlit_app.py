@@ -66,11 +66,12 @@ def main():
         if question := st.chat_input("보기를 제외한 질문을 입력해주세요"):
             with st.chat_message("assistant"):
                 st.markdown(question)
-                query_1 = st.text_input(label="보기 1")
-                query_2 = st.text_input(label="보기 2")
-                query_3 = st.text_input(label="보기 3")
-                query_4 = st.text_input(label="보기 4")
-                query_5 = st.text_input(label="보기 5")
+                while not (query_1 and query_2 and query_3 and query_4 and query_5):
+                    query_1 = st.text_input(label="보기 1")
+                    query_2 = st.text_input(label="보기 2")
+                    query_3 = st.text_input(label="보기 3")
+                    query_4 = st.text_input(label="보기 4")
+                    query_5 = st.text_input(label="보기 5")
                 if query_1 and query_2 and query_3 and query_4 and query_5:
                     question_full = question + '\n\n' + '1.' + query_1 + '\n' + '2.' + query_2 + '\n' + '3.' + query_3 + '\n' + '4.' + query_4 + '\n' + '5.' + query_5
                     st.session_state.messages.append({"role": "user", "content": question_full})
