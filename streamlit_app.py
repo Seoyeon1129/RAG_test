@@ -18,6 +18,12 @@ def main():
     with st.sidebar:
         openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
         process = st.button("실행")
+
+        question_type = st.selectbox(
+            '문제 유형을 선택하세요.',
+            ['주관식', '객관식']
+        )
+
     if process:
         if not openai_api_key:
             st.info("OpenAI API 키를 입력하세요.")
@@ -39,20 +45,25 @@ def main():
                 st.markdown(message["content"])
 
     # Chat logic
-    if query := st.chat_input("질문을 입력해주세요."):
+    if question_type == '주관식':
+        if query := st.chat_input("질문을 입력해주세요."):
 
-        contexts = st.session_state.retriever.retrieve(query)
-        prompt = PROMPT_1.format(query=query, contexts=contexts)
-        st.session_state.messages.append({"role": "user", "content": prompt})
+            contexts = st.session_state.retriever.retrieve(query)
+            prompt = PROMPT_1.format(query=query, contexts=contexts)
+            st.session_state.messages.append({"role": "user", "content": prompt})
 
-        with st.chat_message("user"):
-            st.markdown(query)
+            with st.chat_message("user"):
+                st.markdown(query)
 
-        with st.chat_message("assistant"):
-            with st.spinner("답변 작성중..."):
-                response = text_generator(st.session_state.messages, openai_api_key)
-                st.session_state.messages[-1]["content"] = query
-                st.markdown(response)
+            with st.chat_message("assistant"):
+                with st.spinner("답변 작성중..."):
+                    response = text_generator(st.session_state.messages, openai_api_key)
+                    st.session_state.messages[-1]["content"] = query
+                    st.markdown(response)
+    elif question_type == '객관식':
+        query_main = st.chat_input("질문을 입력해주세요.")
+        query_1 = st.chat_input("보기 1")
+        query_2 = st.chat_input("보기 2")
 
 # Add assistant message to chat history
         st.session_state.messages.append({"role": "assistant", "content": response})
