@@ -63,16 +63,13 @@ def main():
             st.session_state.messages.append({"role": "assistant", "content": response})
 
     elif question_type == '객관식':
-        
-        query = ""
+        message = st.chat_message("assistant")
         if query_main := st.chat_input("보기를 제외한 질문을 입력해주세요."):
-            query += query_main
-            with st.chat_message("user"):
-                st.markdown(query)
-                if query_1 := st.chat_input("보기 1"):
-                    st.markdown(query_1)
-                if query_2 := st.chat_input("보기 2"):
-                    st.markdown(query_2)
+            message.markdown(query_main)
+            if query_1 := st.chat_input("보기 1"):
+                message.markdown(query_1)
+            if query_2 := st.chat_input("보기 2"):
+                message.markdown(query_2)
             
 
 # Add assistant message to chat history
