@@ -65,6 +65,7 @@ def main():
     elif question_type == '객관식':
         if question := st.chat_input("보기를 제외한 질문을 입력해주세요"):
             with st.chat_message("assistant"):
+                st.markdown(question)
                 query_1 = st.text_input(label="보기 1")
                 query_2 = st.text_input(label="보기 2")
                 query_3 = st.text_input(label="보기 3")
