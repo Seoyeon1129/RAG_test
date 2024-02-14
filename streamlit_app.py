@@ -71,7 +71,7 @@ def load_data():
     return chunks
 
 
-def text_generator(messages, openai_api_key, model="gpt-3.5-turbo-0125", temperature=0):
+def text_generator(messages, openai_api_key, model="gpt-4-turbo", temperature=0):
     client = openai.OpenAI(api_key=openai_api_key)
     response = client.chat.completions.create(
         model=model,
