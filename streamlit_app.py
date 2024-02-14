@@ -63,7 +63,7 @@ def main():
             st.session_state.messages.append({"role": "assistant", "content": response})
 
     elif question_type == '객관식':
-        if question := st.chat_input(label="보기를 제외한 질문을 입력해주세요"):
+        if question := st.chat_input("보기를 제외한 질문을 입력해주세요"):
             with st.chat_message("assistant"):
                 query_1 = st.text_input(label="보기 1")
                 query_2 = st.text_input(label="보기 2")
