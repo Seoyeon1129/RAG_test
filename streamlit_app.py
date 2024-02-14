@@ -72,9 +72,9 @@ def main():
                 if query_1 := st.chat_input("보기 1"):
                     query += query_1
                     st.markdown(query)
-                    if query_2 := st.chat_input("보기 2"):
-                        query += query_2
-                        st.markdown(query)
+                if query_2 := st.chat_input("보기 2"):
+                    query += query_2
+                    st.markdown(query)
             
 
 # Add assistant message to chat history
