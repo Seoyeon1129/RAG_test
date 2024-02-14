@@ -63,23 +63,23 @@ def main():
             st.session_state.messages.append({"role": "assistant", "content": response})
 
     elif question_type == '객관식':
-        with st.chat_message("assistant"):
-            question = st.text_input(label="보기를 제외한 질문을 입력해주세요")
-            query_1 = st.text_input(label="보기 1")
-            query_2 = st.text_input(label="보기 2")
-            query_3 = st.text_input(label="보기 3")
-            query_4 = st.text_input(label="보기 4")
-            query_5 = st.text_input(label="보기 5")
-        if question and query_1 and query_2 and query_3 and query_4 and query_5:
-            question_full = question + '\n\n' + '1.' + query_1 + '\n' + '2.' + query_2 + '\n' + '3.' + query_3 + '\n' + '4.' + query_4 + '\n' + '5.' + query_5
-            st.session_state.messages.append({"role": "user", "content": question_full})
-            with st.chat_message("user"):
-                st.markdown(question_full)
+        if question := st.chat_input(label="보기를 제외한 질문을 입력해주세요"):
             with st.chat_message("assistant"):
-                response = '임시 답변'
-                st.markdown(response)
-            st.session_state.messages.append({"role": "assistant", "content": response})
-            
+                query_1 = st.text_input(label="보기 1")
+                query_2 = st.text_input(label="보기 2")
+                query_3 = st.text_input(label="보기 3")
+                query_4 = st.text_input(label="보기 4")
+                query_5 = st.text_input(label="보기 5")
+            if question and query_1 and query_2 and query_3 and query_4 and query_5:
+                question_full = question + '\n\n' + '1.' + query_1 + '\n' + '2.' + query_2 + '\n' + '3.' + query_3 + '\n' + '4.' + query_4 + '\n' + '5.' + query_5
+                st.session_state.messages.append({"role": "user", "content": question_full})
+                with st.chat_message("user"):
+                    st.markdown(question_full)
+                with st.chat_message("assistant"):
+                    response = '임시 답변'
+                    st.markdown(response)
+                st.session_state.messages.append({"role": "assistant", "content": response})
+                
 
             
 
