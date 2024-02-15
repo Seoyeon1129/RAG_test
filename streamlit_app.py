@@ -80,10 +80,11 @@ def main():
                     response = '임시 답변'
                     st.markdown(response)
                 st.session_state.messages.append({"role": "assistant", "content": response})
-                if query := st.text_input("추가 질문하기"):
+                query = st.text_input("추가 질문하기")
                     # contexts = st.session_state.retriever.retrieve(query)
                     # prompt = PROMPT_1.format(query=query, contexts=contexts)
                     # st.session_state.messages.append({"role": "user", "content": prompt})
+                if query:
                     with st.chat_message("user"):
                         st.markdown(query)
                     with st.chat_message("assistant"):
