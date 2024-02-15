@@ -78,6 +78,7 @@ def main():
                     response = '임시 답변'
                     st.markdown(response)
                 st.session_state.messages.append({"role": "assistant", "content": response})
+                st.stop()
             
 
             
