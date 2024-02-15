@@ -63,22 +63,24 @@ def main():
             st.session_state.messages.append({"role": "assistant", "content": response})
 
     elif question_type == '객관식':
-        if question := st.text_input("보기를 제외한 질문을 입력해주세요"):
-            query_1 = st.text_input(label="보기 1")
-            query_2 = st.text_input(label="보기 2")
-            query_3 = st.text_input(label="보기 3")
-            query_4 = st.text_input(label="보기 4")
-            query_5 = st.text_input(label="보기 5")
-            if st.button("입력 완료"):
-                question_full = question + '\n\n' + '1.' + query_1 + '\n' + '2.' + query_2 + '\n' + '3.' + query_3 + '\n' + '4.' + query_4 + '\n' + '5.' + query_5
-                st.session_state.messages.append({"role": "user", "content": question_full})
-                with st.chat_message("user"):
-                    st.markdown(question_full)
-                with st.chat_message("assistant"):
-                    response = '임시 답변'
-                    st.markdown(response)
-                st.session_state.messages.append({"role": "assistant", "content": response})
-                st.stop()
+        button_input = st.button('질문 입력하기')
+        if button_input:
+            if question := st.text_input("보기를 제외한 질문을 입력해주세요"):
+                query_1 = st.text_input(label="보기 1")
+                query_2 = st.text_input(label="보기 2")
+                query_3 = st.text_input(label="보기 3")
+                query_4 = st.text_input(label="보기 4")
+                query_5 = st.text_input(label="보기 5")
+                if st.button("입력 완료"):
+                    question_full = question + '\n\n' + '1.' + query_1 + '\n\n' + '2.' + query_2 + '\n\n' + '3.' + query_3 + '\n\n' + '4.' + query_4 + '\n\n' + '5.' + query_5
+                    st.session_state.messages.append({"role": "user", "content": question_full})
+                    with st.chat_message("user"):
+                        st.markdown(question_full)
+                    with st.chat_message("assistant"):
+                        response = '임시 답변'
+                        st.markdown(response)
+                    st.session_state.messages.append({"role": "assistant", "content": response})
+
             
 
             
@@ -108,6 +110,19 @@ def text_generator(messages, openai_api_key, model="gpt-4-turbo-preview", temper
         temperature=temperature, # this is the degree of randomness of the model's output
     )
     answer = response.choices[0].message.content
+    return answer
+
+def multi_get_answer(question, multi, retriever, k=2, verbose=False, debug=False): #question : 질문, multiful : 문항, query : 전체
+    contexts = []
+    for i in range(len(multi)+1):
+        if i<=(len(multi)-1):
+            contexts.append(retriever.retrieve(multi[i], k))
+        else:
+            contexts.append(retriever.retrieve(question, k))
+    query = (question+', '+', '.join(multi))
+
+    answer = text_generator(prompt)
+
     return answer
 
 if __name__ == '__main__':

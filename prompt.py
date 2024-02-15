@@ -22,3 +22,17 @@ TEMPLATE_1 = """
 참고자료: {contexts}
 """
 PROMPT_1 = PromptTemplate.from_template(template=TEMPLATE_1)
+
+"""
+with st.expander("Reference document"):
+                    st.markdown(
+                        source_documents[0].metadata["source"],
+                        help=source_documents[0].page_content,
+                    )
+                    st.markdown(
+                        source_documents[1].metadata["source"],
+                        help=source_documents[1].page_content,
+                    )
+                    st.markdown(
+                        source_documents[2].metadata["source"],
+"""
