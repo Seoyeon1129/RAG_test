@@ -65,14 +65,14 @@ def main():
     elif question_type == '객관식':
         q, re = qna_multiple()
 
-        if query := st.chat_input("추가 질문하기"):
+        if query := st.text_input("추가 질문하기"):
             # contexts = st.session_state.retriever.retrieve(query)
             # prompt = PROMPT_1.format(query=query, contexts=contexts)
             # st.session_state.messages.append({"role": "user", "content": prompt})
             with st.chat_message("user"):
                 st.markdown(query)
             with st.chat_message("assistant"):
-                response = '임시 응답'
+                response = '임시 응답입니다'
                 st.markdown(response)
             #     with st.spinner("답변 작성중..."):
             #         response = text_generator(st.session_state.messages, openai_api_key)
