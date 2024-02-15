@@ -79,20 +79,20 @@ def main():
                     response = '임시 답변'
                     st.markdown(response)
                 st.session_state.messages.append({"role": "assistant", "content": response})
-                if query := st.text_input("추가 질문하기"):
-                    # contexts = st.session_state.retriever.retrieve(query)
-                    # prompt = PROMPT_1.format(query=query, contexts=contexts)
-                    # st.session_state.messages.append({"role": "user", "content": prompt})
-                    with st.chat_message("user"):
-                        st.markdown(query)
-                    with st.chat_message("assistant"):
-                        response = '임시 응답'
-                        st.markdown(response)
-                    #     with st.spinner("답변 작성중..."):
-                    #         response = text_generator(st.session_state.messages, openai_api_key)
-                    #         st.session_state.messages[-1]["content"] = query
-                    #         st.markdown(response)
-                        st.session_state.messages.append({"role": "assistant", "content": response})
+            if query := st.text_input("추가 질문하기"):
+                # contexts = st.session_state.retriever.retrieve(query)
+                # prompt = PROMPT_1.format(query=query, contexts=contexts)
+                # st.session_state.messages.append({"role": "user", "content": prompt})
+                with st.chat_message("user"):
+                    st.markdown(query)
+                with st.chat_message("assistant"):
+                    response = '임시 응답'
+                    st.markdown(response)
+                #     with st.spinner("답변 작성중..."):
+                #         response = text_generator(st.session_state.messages, openai_api_key)
+                #         st.session_state.messages[-1]["content"] = query
+                #         st.markdown(response)
+                    st.session_state.messages.append({"role": "assistant", "content": response})
 
             
 
