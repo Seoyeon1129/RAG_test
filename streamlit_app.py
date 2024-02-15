@@ -63,8 +63,7 @@ def main():
             st.session_state.messages.append({"role": "assistant", "content": response})
 
     elif question_type == '객관식':
-        button_input = st.button('질문 입력하기')
-        if button_input:
+        if st.button('질문 입력하기'):
             if question := st.text_input("보기를 제외한 질문을 입력해주세요"):
                 query_1 = st.text_input(label="보기 1")
                 query_2 = st.text_input(label="보기 2")
