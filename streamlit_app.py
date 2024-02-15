@@ -84,7 +84,8 @@ def main():
                     # contexts = st.session_state.retriever.retrieve(query)
                     # prompt = PROMPT_1.format(query=query, contexts=contexts)
                     # st.session_state.messages.append({"role": "user", "content": prompt})
-                if query:
+                button2 = st.button("입력 완료")
+                if button2:
                     with st.chat_message("user"):
                         st.markdown(query)
                     with st.chat_message("assistant"):
