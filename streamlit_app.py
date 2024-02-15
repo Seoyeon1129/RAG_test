@@ -62,40 +62,38 @@ def main():
                     st.markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
 
-    elif question_type == '객관식':
+    # elif question_type == '객관식':
 
-        if question := st.text_input("보기를 제외한 질문을 입력해주세요"):
-            query_1 = st.text_input(label="보기 1")
-            query_2 = st.text_input(label="보기 2")
-            query_3 = st.text_input(label="보기 3")
-            query_4 = st.text_input(label="보기 4")
-            query_5 = st.text_input(label="보기 5")
-            button = st.button("입력 완료")
-            if button:
-                question_full = question + '\n\n' + '1.' + query_1 + '\n\n' + '2.' + query_2 + '\n\n' + '3.' + query_3 + '\n\n' + '4.' + query_4 + '\n\n' + '5.' + query_5
-                st.session_state.messages.append({"role": "user", "content": question_full})
-                with st.chat_message("user"):
-                    st.markdown(question_full)
-                with st.chat_message("assistant"):
-                    response = '임시 답변'
-                    st.markdown(response)
-                st.session_state.messages.append({"role": "assistant", "content": response})
-                query = st.text_input("추가 질문하기")
-                    # contexts = st.session_state.retriever.retrieve(query)
-                    # prompt = PROMPT_1.format(query=query, contexts=contexts)
-                    # st.session_state.messages.append({"role": "user", "content": prompt})
-                button2 = st.button("입력 완료")
-                if button2:
-                    with st.chat_message("user"):
-                        st.markdown(query)
-                    with st.chat_message("assistant"):
-                        response = '임시 응답'
-                        st.markdown(response)
-                    #     with st.spinner("답변 작성중..."):
-                    #         response = text_generator(st.session_state.messages, openai_api_key)
-                    #         st.session_state.messages[-1]["content"] = query
-                    #         st.markdown(response)
-                        st.session_state.messages.append({"role": "assistant", "content": response})
+        # if question := st.text_input("보기를 제외한 질문을 입력해주세요"):
+        #     query_1 = st.text_input(label="보기 1")
+        #     query_2 = st.text_input(label="보기 2")
+        #     query_3 = st.text_input(label="보기 3")
+        #     query_4 = st.text_input(label="보기 4")
+        #     query_5 = st.text_input(label="보기 5")
+        #     button =st.button("입력 완료")
+        #     if st.button("입력 완료"):
+        #         question_full = question + '\n\n' + '1.' + query_1 + '\n\n' + '2.' + query_2 + '\n\n' + '3.' + query_3 + '\n\n' + '4.' + query_4 + '\n\n' + '5.' + query_5
+        #         st.session_state.messages.append({"role": "user", "content": question_full})
+        #         with st.chat_message("user"):
+        #             st.markdown(question_full)
+        #         with st.chat_message("assistant"):
+        #             response = '임시 답변'
+        #             st.markdown(response)
+        #         st.session_state.messages.append({"role": "assistant", "content": response})
+        #     if query := st.text_input("추가 질문하기"):
+        #         # contexts = st.session_state.retriever.retrieve(query)
+        #         # prompt = PROMPT_1.format(query=query, contexts=contexts)
+        #         # st.session_state.messages.append({"role": "user", "content": prompt})
+        #         with st.chat_message("user"):
+        #             st.markdown(query)
+        #         with st.chat_message("assistant"):
+        #             response = '임시 응답'
+        #             st.markdown(response)
+        #         #     with st.spinner("답변 작성중..."):
+        #         #         response = text_generator(st.session_state.messages, openai_api_key)
+        #         #         st.session_state.messages[-1]["content"] = query
+        #         #         st.markdown(response)
+        #             st.session_state.messages.append({"role": "assistant", "content": response})
 
             
 
