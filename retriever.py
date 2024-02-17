@@ -15,7 +15,18 @@ class SparseRetriever():
             self.tokenized_corpus.append(tokenizer.morphs(text))
         self.bm25 = BM25Okapi(self.tokenized_corpus)
         my_bar.empty()
+        
     def retrieve(self, query, k=5):
         tokenized_query = self.tokenizer.morphs(query)
-        results = self.bm25.get_top_n(tokenized_query, self.corpus, n=k)
-        return results
+        contexts = self.bm25.get_top_n(tokenized_query, self.corpus, n=k)
+        context_scores = []
+        for context in contexts:
+            tokenized_context = self.tokenizer.morphs(context)
+            common_terms = set(tokenized_query).intersection(set(tokenized_context))
+            score = len(common_terms) / len(set(tokenized_query).union(set(tokenized_context))) 
+            context_scores.append(score)
+
+        # 유사도 점수에 따라 컨텍스트 재정렬
+        reranked_contexts = [context for _, context in sorted(zip(context_scores, contexts), key=lambda x: x[0], reverse=True)]
+        
+        return reranked_contexts

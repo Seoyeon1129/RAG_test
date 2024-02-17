@@ -19,11 +19,6 @@ def main():
         openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
         process = st.button("실행")
 
-        question_type = st.selectbox(
-            '문제 유형을 선택하세요.',
-            ['주관식', '객관식']
-        )
-
     if process:
         if not openai_api_key:
             st.info("OpenAI API 키를 입력하세요.")
@@ -44,23 +39,21 @@ def main():
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-    # Chat logic
-    if question_type == '주관식':
-        if query := st.chat_input("질문을 입력해주세요."):
+    if query := st.chat_input("질문을 입력해주세요."):
 
-            contexts = st.session_state.retriever.retrieve(query)
-            prompt = PROMPT_1.format(query=query, contexts=contexts)
-            st.session_state.messages.append({"role": "user", "content": prompt})
+        contexts = st.session_state.retriever.retrieve(query)
+        prompt = PROMPT_1.format(query=query, contexts=contexts)
+        st.session_state.messages.append({"role": "user", "content": prompt})
 
-            with st.chat_message("user"):
-                st.markdown(query)
+        with st.chat_message("user"):
+            st.markdown(query)
 
-            with st.chat_message("assistant"):
-                with st.spinner("답변 작성중..."):
-                    response = text_generator(st.session_state.messages, openai_api_key)
-                    st.session_state.messages[-1]["content"] = query
-                    st.markdown(response)
-            st.session_state.messages.append({"role": "assistant", "content": response})
+        with st.chat_message("assistant"):
+            with st.spinner("답변 작성중..."):
+                response = text_generator(st.session_state.messages, openai_api_key)
+                st.session_state.messages[-1]["content"] = query
+                st.markdown(response)
+        st.session_state.messages.append({"role": "assistant", "content": response})
 
     # elif question_type == '객관식':
 
@@ -124,19 +117,6 @@ def text_generator(messages, openai_api_key, model="gpt-4-turbo-preview", temper
         temperature=temperature, # this is the degree of randomness of the model's output
     )
     answer = response.choices[0].message.content
-    return answer
-
-def multi_get_answer(question, multi, retriever, k=2, verbose=False, debug=False): #question : 질문, multiful : 문항, query : 전체
-    contexts = []
-    for i in range(len(multi)+1):
-        if i<=(len(multi)-1):
-            contexts.append(retriever.retrieve(multi[i], k))
-        else:
-            contexts.append(retriever.retrieve(question, k))
-    query = (question+', '+', '.join(multi))
-
-    answer = text_generator(prompt)
-
     return answer
 
 if __name__ == '__main__':
